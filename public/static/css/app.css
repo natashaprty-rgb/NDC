@@ -250,7 +250,8 @@ dialog.confirm .confirm__actions { display: flex; justify-content: flex-end; gap
   .grid-2, .grid-3, .form-grid { grid-template-columns: 1fr; }
   .form-grid .span-2 { grid-column: span 1; }
   .content { padding: 1rem; }
-  .topbar .user-name { display: none; }
+  .topbar .user-name, .topbar__org { display: none; }
+  .topbar { padding: .5rem .75rem; gap: .5rem; }
 }
 @media (max-width: 520px) {
   .grid-4 { grid-template-columns: 1fr; }

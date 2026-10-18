@@ -1,7 +1,7 @@
 @props(['name', 'label', 'checked' => false, 'value' => '1', 'class' => ''])
 @php
     $key = trim(str_replace(['[', ']'], ['.', ''], $name), '.');
-    $id = 'f_'.str_replace('.', '_', $key).'_'.md5((string) $value);
+    $id = unique_field_id('f_'.str_replace('.', '_', $key));
     $isChecked = old() ? (bool) old($key) : $checked;
 @endphp
 <div class="field {{ $class }}">

@@ -77,4 +77,11 @@ class AuditAndLocaleTest extends TestCase
             $this->assertSame([], array_values($missing), "Somali {$name} is missing keys");
         }
     }
+
+    public function test_somali_month_names_are_correct(): void
+    {
+        $this->assertSame('Maarso', \Carbon\Carbon::create(2026, 3, 1)->locale('so')->translatedFormat('F'));
+        $this->assertSame('Oktoobar', \Carbon\Carbon::create(2026, 10, 1)->locale('so')->translatedFormat('F'));
+        $this->assertSame('Diseembar', \Carbon\Carbon::create(2026, 12, 1)->locale('so')->translatedFormat('F'));
+    }
 }

@@ -1,7 +1,7 @@
-@props(['name', 'label', 'options' => [], 'value' => null, 'required' => false, 'placeholder' => null, 'help' => null, 'class' => ''])
+@props(['name', 'label', 'id' => null, 'options' => [], 'value' => null, 'required' => false, 'placeholder' => null, 'help' => null, 'class' => ''])
 @php
     $key = trim(str_replace(['[', ']'], ['.', ''], $name), '.');
-    $id = 'f_'.str_replace('.', '_', $key);
+    $id = unique_field_id($id ?? 'f_'.str_replace('.', '_', $key));
     $current = (string) old($key, $value);
 @endphp
 <div class="field {{ $class }}">

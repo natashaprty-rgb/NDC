@@ -157,4 +157,9 @@ return [
     'settings_updated' => 'Dejinta waa la cusbooneysiiyay',
     'exported' => 'La dhoofiyay',
     'paid_status' => 'La bixiyay',
+    'access_granted' => 'Helitaan la siiyay',
+    'access_revoked' => 'Helitaan laga qaaday',
+    'approval_reset' => 'Ansixintii dib loo celiyay',
+    'task_created_from_action' => 'Hawl laga abuuray qodob tallaabo',
+    'version_uploaded' => 'Nooc cusub ayaa la soo geliyay',
 ];

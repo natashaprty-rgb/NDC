@@ -157,7 +157,7 @@ Use separate servers or at least separate databases, `.env` files and `APP_KEY`s
 
 - [ ] *Administration → System health* shows all checks OK (HTTPS, debug off, secure cookies, scheduler, queue, backup).
 - [ ] First administrator changed the temporary password and enabled two-step verification.
-- [ ] Organisation settings and reference prefixes reviewed; approved branding applied (`public/assets/img/README.md`).
+- [ ] Organisation settings and reference prefixes reviewed; approved branding applied (`public/static/img/README.md`).
 - [ ] Email delivery tested (enable *Settings → Notifications → email*).
 - [ ] A backup restoration test performed and recorded under *Backups*.
 - [ ] `composer audit` shows no known vulnerabilities.

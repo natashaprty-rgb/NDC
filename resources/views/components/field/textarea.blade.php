@@ -1,7 +1,7 @@
-@props(['name', 'label', 'value' => null, 'required' => false, 'help' => null, 'rows' => 4, 'class' => ''])
+@props(['name', 'label', 'id' => null, 'value' => null, 'required' => false, 'help' => null, 'rows' => 4, 'class' => ''])
 @php
     $key = trim(str_replace(['[', ']'], ['.', ''], $name), '.');
-    $id = 'f_'.str_replace('.', '_', $key);
+    $id = unique_field_id($id ?? 'f_'.str_replace('.', '_', $key));
 @endphp
 <div class="field {{ $class }}">
     <label for="{{ $id }}">{{ $label }} @if($required)<span class="req" aria-hidden="true">*</span>@endif</label>

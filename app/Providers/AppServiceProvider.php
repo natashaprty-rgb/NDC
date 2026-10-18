@@ -76,6 +76,12 @@ class AppServiceProvider extends ServiceProvider
             'backup_record' => \App\Models\BackupRecord::class,
         ]);
 
+        // Carbon's bundled Somali locale omits "Maarso" (March), shifting every later month. Correct it.
+        \Carbon\Translator::get('so')->setTranslations([
+            'months' => ['Janaayo', 'Febraayo', 'Maarso', 'Abriil', 'Maajo', 'Juun', 'Luuliyo', 'Agoosto', 'Sebteembar', 'Oktoobar', 'Nofeembar', 'Diseembar'],
+            'months_short' => ['Jan', 'Feb', 'Mar', 'Abr', 'Mjo', 'Jun', 'Lyo', 'Agt', 'Seb', 'Okt', 'Nof', 'Dis'],
+        ]);
+
         Paginator::defaultView('components.pagination');
 
         Password::defaults(fn () => Password::min(10)->letters()->mixedCase()->numbers()->symbols());

@@ -7,7 +7,7 @@ _Document status: Phase 1 output. Written 2026-10-18 after inspecting the reposi
 | Item | Finding |
 |---|---|
 | Repository | `natashaprty-rgb/NDC`, one commit containing only a two-line `README.md`. No application code, no prior schema, nothing to preserve. |
-| Approved branding | None supplied. A neutral, clearly replaceable placeholder mark ("NDC" text badge) is used. See `public/assets/img/README.md`. |
+| Approved branding | None supplied. A neutral, clearly replaceable placeholder mark ("NDC" text badge) is used. See `public/static/img/README.md`. |
 | Official data | None supplied. No staff, project, budget or asset data has been invented. Seeders create **only** roles, permissions, reference categories and one bootstrap administrator account; optional demo data is gated behind `--class=DemoDataSeeder` and is clearly labelled `[DEMO]`. |
 
 ## 2. Available tools (development container)
@@ -18,7 +18,7 @@ _Document status: Phase 1 output. Written 2026-10-18 after inspecting the reposi
 | PHP | 8.3.6 (CLI) | Extensions present: pdo_mysql, mbstring, openssl, fileinfo, intl, gd, zip, xml, curl, sodium, redis. **`bcmath` is NOT installed** (see money handling below). |
 | Composer | 2.8.12 | GitHub dist downloads are blocked by the container's network policy; packages were installed with `--prefer-source` (git clone). This does not affect the application. |
 | MySQL | 8.0.46 | Not pre-installed; installed from Ubuntu repositories for local development and testing. |
-| Node | 22 | Not required. The UI uses plain CSS and vanilla JavaScript served from `public/assets` — no build step. |
+| Node | 22 | Not required. The UI uses plain CSS and vanilla JavaScript served from `public/static` — no build step. |
 
 **Selected framework: Laravel 12.x** — supports PHP 8.2–8.4, so it runs on current XAMPP builds (PHP 8.2) and on Linux production servers with PHP 8.2+.
 

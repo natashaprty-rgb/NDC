@@ -63,3 +63,20 @@ if (! function_exists('route_if')) {
         return \Illuminate\Support\Facades\Route::has($name) ? route($name, $parameters) : null;
     }
 }
+
+if (! function_exists('unique_field_id')) {
+    /** Returns $id, suffixed if it was already used in this request (pages with several inline forms). */
+    function unique_field_id(string $id): string
+    {
+        $used = request()->attributes->get('_field_ids', []);
+        $candidate = $id;
+        $n = 1;
+        while (isset($used[$candidate])) {
+            $candidate = $id.'_'.(++$n);
+        }
+        $used[$candidate] = true;
+        request()->attributes->set('_field_ids', $used);
+
+        return $candidate;
+    }
+}

@@ -12,9 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ? $title.' · ' : '' }}{{ $orgShort }} {{ __('common.app_short') }}</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}?v=1">
-    <link rel="icon" href="{{ asset('assets/img/placeholder-mark.svg') }}" type="image/svg+xml">
-    <script src="{{ asset('assets/js/app.js') }}?v=1" defer></script>
+    <link rel="stylesheet" href="{{ asset('static/css/app.css') }}?v=1">
+    <link rel="icon" href="{{ asset('static/img/placeholder-mark.svg') }}" type="image/svg+xml">
+    <script src="{{ asset('static/js/app.js') }}?v=1" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">{{ __('common.skip_to_content') }}</a>
@@ -24,7 +24,7 @@
 <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="{{ __('nav.main_navigation') }}">
         <a href="{{ route('dashboard') }}" class="sidebar__brand" style="text-decoration:none">
-            {{-- Neutral placeholder mark: replace with the approved NDC logo (see public/assets/img/README.md) --}}
+            {{-- Neutral placeholder mark: replace with the approved NDC logo (see public/static/img/README.md) --}}
             <span class="brand-mark" aria-hidden="true">{{ \Illuminate\Support\Str::limit($orgShort, 4, '') }}</span>
             <span class="brand-text"><strong>{{ $orgShort }} {{ __('common.app_short') }}</strong><span>{{ __('common.app_tagline') }}</span></span>
         </a>
@@ -52,7 +52,7 @@
             <button type="button" class="icon-btn menu-toggle" data-nav-toggle aria-controls="sidebar" aria-expanded="false">
                 <x-icon name="menu" /><span class="sr-only">{{ __('nav.toggle_menu') }}</span>
             </button>
-            <span class="muted small">{{ $orgName }}</span>
+            <span class="muted small topbar__org">{{ $orgName }}</span>
             <div class="topbar__spacer"></div>
 
             <form method="POST" action="{{ route('locale.switch') }}" class="lang-switch" aria-label="{{ __('common.language') }}">
@@ -72,7 +72,7 @@
 
             <details class="user-menu">
                 <summary>
-                    <span class="avatar" aria-hidden="true">{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($user->name, 0, 1)) }}</span>
+                    <span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(preg_replace('/[^\pL]+/u', '', $user->name) ?: '?', 0, 1)) }}</span>
                     <span class="user-name small">{{ $user->name }}</span>
                 </summary>
                 <div class="user-menu__panel">

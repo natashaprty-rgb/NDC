@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ? $title.' · ' : '' }}{{ $orgShort }} {{ __('common.app_short') }}</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}?v=1">
-    <link rel="icon" href="{{ asset('assets/img/placeholder-mark.svg') }}" type="image/svg+xml">
-    <script src="{{ asset('assets/js/app.js') }}?v=1" defer></script>
+    <link rel="stylesheet" href="{{ asset('static/css/app.css') }}?v=1">
+    <link rel="icon" href="{{ asset('static/img/placeholder-mark.svg') }}" type="image/svg+xml">
+    <script src="{{ asset('static/js/app.js') }}?v=1" defer></script>
 </head>
 <body>
 <main class="auth-page">

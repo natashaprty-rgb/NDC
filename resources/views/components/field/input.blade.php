@@ -1,7 +1,7 @@
-@props(['name', 'label', 'type' => 'text', 'value' => null, 'required' => false, 'help' => null, 'class' => ''])
+@props(['name', 'label', 'id' => null, 'type' => 'text', 'value' => null, 'required' => false, 'help' => null, 'class' => ''])
 @php
     $key = trim(str_replace(['[', ']'], ['.', ''], $name), '.');
-    $id = 'f_'.str_replace('.', '_', $key);
+    $id = unique_field_id($id ?? 'f_'.str_replace('.', '_', $key));
     $current = $type === 'password' ? null : old($key, $value instanceof \DateTimeInterface ? $value->format($type === 'datetime-local' ? 'Y-m-d\TH:i' : 'Y-m-d') : $value);
 @endphp
 <div class="field {{ $class }}">

@@ -157,4 +157,9 @@ return [
     'settings_updated' => 'Settings updated',
     'exported' => 'Exported',
     'paid_status' => 'Paid',
+    'access_granted' => 'Access granted',
+    'access_revoked' => 'Access revoked',
+    'approval_reset' => 'Approval reset',
+    'task_created_from_action' => 'Task created from action point',
+    'version_uploaded' => 'New version uploaded',
 ];

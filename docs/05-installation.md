@@ -7,7 +7,7 @@
 | PHP | 8.2, 8.3 or 8.4 | Extensions: `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `intl`, `xml`, `curl`, `zip`, `gd`, `tokenizer`, `ctype`. `bcmath` is **not** required. |
 | Composer | 2.x | |
 | MySQL | 8.0+ (MariaDB 10.6+ also works) | InnoDB, `utf8mb4` |
-| Node.js | not required | The interface uses plain CSS/JS from `public/assets`. |
+| Node.js | not required | The interface uses plain CSS/JS from `public/static`. |
 | `mysqldump`, `gzip`, `tar` | any | Only for `php artisan ndc:backup`. |
 
 Tested in development with PHP 8.3.6, Composer 2.8.12, MySQL 8.0.46 on Ubuntu 24.04 (Laravel 12.70).
