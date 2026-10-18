@@ -61,8 +61,11 @@ class StaffController extends Controller
 
         $tasks = $staff->user_id
             ? Task::query()->where('assigned_to', $staff->user_id)->open()->with('project')->orderBy('due_date')->limit(20)->get()
+                ->filter(fn (Task $task) => $request->user()->can('view', $task))->values()
             : collect();
-        $assets = Asset::query()->where('assigned_staff_id', $staff->id)->with('category')->orderBy('asset_tag')->get();
+        $assets = $request->user()->can('assets.view')
+            ? Asset::query()->where('assigned_staff_id', $staff->id)->with('category')->orderBy('asset_tag')->get()
+            : collect();
 
         return view('staff.show', [
             'member' => $staff,
