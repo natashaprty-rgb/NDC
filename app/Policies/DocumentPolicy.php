@@ -50,13 +50,14 @@ class DocumentPolicy
         return $this->update($user, $document) && in_array($document->status, ['draft', 'rejected'], true) && $document->current_version > 0;
     }
 
-    /** Reviewers cannot approve documents they own or registered. */
+    /** Reviewers cannot approve documents they own, registered, or whose current version they uploaded. */
     public function approve(User $user, Document $document): bool
     {
         return $document->status === 'pending_review'
             && $user->hasPermission('documents.approve')
             && $document->owner_id !== $user->id
             && $document->created_by !== $user->id
+            && $document->versions()->where('version_number', $document->current_version)->value('uploaded_by') !== $user->id
             && $document->canBeViewedBy($user);
     }
 
