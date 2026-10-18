@@ -78,6 +78,12 @@ class User extends Authenticatable
         return $query->where('status', self::STATUS_ACTIVE);
     }
 
+    /** Active users whose roles grant the permission (used to notify approvers). */
+    public function scopeWithPermission(Builder $query, string $slug): Builder
+    {
+        return $query->active()->whereHas('roles.permissions', fn (Builder $p) => $p->where('slug', $slug));
+    }
+
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
