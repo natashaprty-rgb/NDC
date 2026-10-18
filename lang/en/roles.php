@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'title' => 'Roles & permissions',
+    'new' => 'New role',
+    'edit' => 'Edit role',
+    'edit_permissions' => 'Edit permissions',
+    'name' => 'Role name',
+    'permissions' => 'Permissions',
+    'users' => 'Users',
+    'system' => 'Built-in',
+    'custom' => 'Custom',
+    'slug_taken' => 'A role with a similar name already exists.',
+    'super_admin_note' => 'The Super Administrator role always holds every permission and cannot be edited.',
+    'no_users' => 'No users hold this role.',
+    'group' => [
+        'dashboard' => 'Dashboard',
+        'administration' => 'Administration',
+        'organisation' => 'Organisation',
+        'projects' => 'Projects',
+        'tasks' => 'Tasks',
+        'documents' => 'Documents',
+        'correspondence' => 'Correspondence',
+        'meetings' => 'Meetings',
+        'assets' => 'Assets',
+        'procurement' => 'Procurement',
+        'finance' => 'Finance',
+        'reports' => 'Reports',
+    ],
+];

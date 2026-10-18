@@ -7,6 +7,8 @@
  */
 return [
 
+    'version' => '1.0.0',
+
     'settings_defaults' => [
         // Organisation
         'org.name' => 'National Data Center Somalia',

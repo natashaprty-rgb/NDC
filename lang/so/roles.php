@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'title' => 'Doorarka & oggolaanshaha',
+    'new' => 'Door cusub',
+    'edit' => 'Wax ka beddel doorka',
+    'edit_permissions' => 'Wax ka beddel oggolaanshaha',
+    'name' => 'Magaca doorka',
+    'permissions' => 'Oggolaanshaha',
+    'users' => 'Isticmaalayaasha',
+    'system' => 'Nidaamka',
+    'custom' => 'Gaar ah',
+    'slug_taken' => 'Door leh magac la mid ah ayaa horay u jiray.',
+    'super_admin_note' => 'Doorka Maamulaha Sare had iyo jeer wuxuu leeyahay dhammaan oggolaanshaha lamana beddeli karo.',
+    'no_users' => 'Isticmaale doorkan haysta ma jiro.',
+    'group' => [
+        'dashboard' => 'Shaashadda guud',
+        'administration' => 'Maamulka',
+        'organisation' => 'Hay\'adda',
+        'projects' => 'Mashaariicda',
+        'tasks' => 'Hawlaha',
+        'documents' => 'Dukumiintiyada',
+        'correspondence' => 'Waraaqaha',
+        'meetings' => 'Shirarka',
+        'assets' => 'Hantida',
+        'procurement' => 'Iibsiga',
+        'finance' => 'Maaliyadda',
+        'reports' => 'Warbixinnada',
+    ],
+];
