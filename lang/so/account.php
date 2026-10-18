@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'my_profile' => 'Astaantayda',
+    'account_details' => 'Faahfaahinta akoonka',
+    'roles' => 'Doorarka',
+    'last_login' => 'Gelitaankii ugu dambeeyay',
+    'password_changed' => 'Markii ugu dambeysay erayga sirta la beddelay',
+    'mfa' => 'Xaqiijin laba-tallaabo ah',
+    'mfa_on' => 'Shaqeynaysa',
+    'mfa_on_since' => 'Shaqeyneysay tan iyo :date.',
+    'mfa_off' => 'Xaqiijinta laba-tallaabo ma shaqeyneyso. Daaristeedu waxay ilaalisaa akoonkaaga haddii erayga sirta la xado.',
+    'mfa_setup' => 'Deji xaqiijinta laba-tallaabo',
+    'mfa_step1' => 'Ku rakib taleefankaaga barnaamij xaqiijin (authenticator) oo taageera TOTP.',
+    'mfa_step2' => 'Gacanta ku dar akoon adigoo isticmaalaya furahan:',
+    'mfa_step3' => 'Geli koodhka 6-da god ah ee barnaamijku muujiyo si aad u xaqiijiso.',
+    'mfa_uri' => 'URI-ga dejinta (barnaamijyada aqbala):',
+    'mfa_confirm' => 'Xaqiiji oo daar',
+    'mfa_disable' => 'Dami xaqiijinta laba-tallaabo',
+    'mfa_disable_confirm' => 'Ma demineysaa xaqiijinta laba-tallaabo ee akoonkaaga?',
+    'recovery_codes' => 'Koodhadhka soo-kabashada',
+    'recovery_codes_help' => 'Koodh kasta hal mar ayaa la isticmaali karaa haddii taleefanku kaa lumo. Mar dambe lama muujin doono.',
+    'preferences' => 'Doorashooyinka',
+    'recent_logins' => 'Dhaqdhaqaaqa gelitaanka ee dhowaan',
+];

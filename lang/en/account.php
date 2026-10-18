@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'my_profile' => 'My profile',
+    'account_details' => 'Account details',
+    'roles' => 'Roles',
+    'last_login' => 'Last sign-in',
+    'password_changed' => 'Password last changed',
+    'mfa' => 'Two-step verification',
+    'mfa_on' => 'Enabled',
+    'mfa_on_since' => 'Enabled since :date.',
+    'mfa_off' => 'Two-step verification is not enabled. Enabling it protects your account if your password is stolen.',
+    'mfa_setup' => 'Set up two-step verification',
+    'mfa_step1' => 'Install an authenticator app (for example any RFC 6238 / TOTP compatible app) on your phone.',
+    'mfa_step2' => 'Add an account manually using this key:',
+    'mfa_step3' => 'Enter the 6-digit code shown by the app to confirm.',
+    'mfa_uri' => 'Setup URI (for apps that accept it):',
+    'mfa_confirm' => 'Confirm and enable',
+    'mfa_disable' => 'Disable two-step verification',
+    'mfa_disable_confirm' => 'Disable two-step verification for your account?',
+    'recovery_codes' => 'Recovery codes',
+    'recovery_codes_help' => 'Each code can be used once if you lose your phone. They will not be shown again.',
+    'preferences' => 'Preferences',
+    'recent_logins' => 'Recent sign-in activity',
+];

@@ -108,14 +108,8 @@ class AppServiceProvider extends ServiceProvider
 
     private function registerRateLimiters(): void
     {
-        RateLimiter::for('login', function (Request $request) {
-            $email = strtolower((string) $request->input('email'));
-
-            return [
-                Limit::perMinute(5)->by($email.'|'.$request->ip()),
-                Limit::perMinute(20)->by($request->ip()),
-            ];
-        });
+        // IP-wide backstop. Per-account lockout (5 failures / 5 minutes) is enforced in LoginController.
+        RateLimiter::for('login', fn (Request $request) => Limit::perMinute(20)->by($request->ip()));
 
         RateLimiter::for('sensitive', fn (Request $request) => Limit::perMinute(6)->by(($request->user()?->id ?? 'guest').'|'.$request->ip()));
 

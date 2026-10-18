@@ -2,24 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
-     * Seed the application's database.
+     * Production-safe seed: roles/permissions, generic categories and the
+     * first administrator. No organisational data is invented.
+     * Demonstration data: php artisan db:seed --class=DemoDataSeeder (non-production only).
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+            ReferenceDataSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }

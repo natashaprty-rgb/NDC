@@ -129,6 +129,15 @@ class User extends Authenticatable
         return $this->staff?->department_id;
     }
 
+    /** @var list<int>|null */
+    private ?array $headedDepartmentsCache = null;
+
+    /** IDs of departments this user is recorded as head of. */
+    public function headedDepartmentIds(): array
+    {
+        return $this->headedDepartmentsCache ??= Department::query()->where('head_user_id', $this->id)->pluck('id')->map(fn ($id) => (int) $id)->all();
+    }
+
     public function hasMfaEnabled(): bool
     {
         return $this->mfa_enabled_at !== null && $this->mfa_secret !== null;
