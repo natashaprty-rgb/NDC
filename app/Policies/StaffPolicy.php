@@ -18,12 +18,6 @@ class StaffPolicy
 
     public function view(User $user, Staff $staff): bool
     {
-        // Attachment downloads are authorised through a flagged copy of the
-        // record (Staff::attachmentAuthorizationTarget()).
-        if ($staff->authorisingAttachments) {
-            return $this->viewAttachments($user, $staff);
-        }
-
         return $user->can('staff.view');
     }
 

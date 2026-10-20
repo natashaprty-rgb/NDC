@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Upload, download and removal of files attached to any record. Access is
- * delegated to the parent record's policy: "view" to download, "update" to
- * upload or remove.
+ * delegated to the parent record's policy: "viewAttachments" (when the
+ * policy defines it) or "view" to download, "update" to upload or remove.
  */
 class AttachmentController extends Controller
 {
@@ -45,7 +46,10 @@ class AttachmentController extends Controller
     {
         $parent = $attachment->attachable;
         abort_if($parent === null, 404);
-        $this->authorize('view', $this->authorizationTarget($parent));
+        $target = $this->authorizationTarget($parent);
+        // Policies may define a stricter "viewAttachments" ability (e.g. staff CVs).
+        $policy = Gate::getPolicyFor($target);
+        $this->authorize($policy && method_exists($policy, 'viewAttachments') ? 'viewAttachments' : 'view', $target);
 
         abort_unless(Storage::disk($attachment->disk)->exists($attachment->path), 404);
         Audit::log('file_downloaded', $parent, $attachment->original_name);

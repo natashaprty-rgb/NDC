@@ -34,12 +34,6 @@ class Staff extends Model
     /** Gender values => English labels (translated at render time). */
     public const GENDERS = ['female' => 'Female', 'male' => 'Male'];
 
-    /**
-     * Set on a clone of the record when it is authorised on behalf of one of
-     * its attachments (CVs, certificates), so the policy can apply the
-     * stricter attachment rule. Never persisted.
-     */
-    public bool $authorisingAttachments = false;
 
     protected function casts(): array
     {
@@ -91,17 +85,6 @@ class Staff extends Model
             ->orWhere('email', 'like', $like));
     }
 
-    /**
-     * Attachments (CVs, certificates) are authorised through a flagged copy
-     * of the staff record; see StaffPolicy::view().
-     */
-    public function attachmentAuthorizationTarget(): self
-    {
-        $target = clone $this;
-        $target->authorisingAttachments = true;
-
-        return $target;
-    }
 
     /**
      * id => "Name (staff number)" pairs for select inputs.
