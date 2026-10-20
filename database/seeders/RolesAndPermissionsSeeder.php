@@ -14,9 +14,7 @@ use Spatie\Permission\PermissionRegistrar;
  */
 class RolesAndPermissionsSeeder extends Seeder
 {
-    public function __construct(private bool $syncRoles = false)
-    {
-    }
+    public function __construct(private bool $syncRoles = false) {}
 
     public function run(): void
     {

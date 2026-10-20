@@ -6,6 +6,7 @@ use App\Services\TwoFactorService;
 use App\Support\Audit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -149,7 +150,7 @@ class ProfileController extends Controller
             ->map(fn ($s) => (object) [
                 'ip_address' => $s->ip_address,
                 'user_agent' => mb_substr((string) $s->user_agent, 0, 120),
-                'last_active' => \Illuminate\Support\Carbon::createFromTimestamp($s->last_activity),
+                'last_active' => Carbon::createFromTimestamp($s->last_activity),
                 'is_current' => $s->id === $request->session()->getId(),
             ])->all();
     }

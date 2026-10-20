@@ -17,9 +17,7 @@ use PragmaRX\Google2FA\Google2FA;
  */
 class TwoFactorService
 {
-    public function __construct(private readonly Google2FA $engine = new Google2FA)
-    {
-    }
+    public function __construct(private readonly Google2FA $engine = new Google2FA) {}
 
     public function generateSecret(): string
     {

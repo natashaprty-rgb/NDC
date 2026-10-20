@@ -23,8 +23,7 @@ class GenericNotification extends AppNotification
         public string $bodyKey,
         public array $replace,
         public string $link,
-    ) {
-    }
+    ) {}
 
     protected function type(): string
     {

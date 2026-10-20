@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
         'budget_allocation' => Models\BudgetAllocation::class,
         'expense' => Models\Expense::class,
         'setting' => Models\Setting::class,
-        'role' => \Spatie\Permission\Models\Role::class,
+        'role' => Role::class,
     ];
 
     public function register(): void
@@ -68,6 +69,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::enforceMorphMap(self::MORPH_MAP);
+
+        // Each module keeps its interface translations in lang/modules/{module}/{locale}.json.
+        foreach (glob(lang_path('modules/*'), GLOB_ONLYDIR) ?: [] as $path) {
+            $this->app['translator']->addJsonPath($path);
+        }
 
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
 

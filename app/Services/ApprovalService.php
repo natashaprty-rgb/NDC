@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Models\Approval;
+use App\Models\Concerns\HasApprovals;
 use App\Models\User;
 use App\Notifications\ApprovalDecided;
 use App\Notifications\ApprovalRequested;
 use App\Support\Audit;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
@@ -28,7 +30,7 @@ class ApprovalService
     /**
      * Open an approval request for the model.
      *
-     * @param  Model&\App\Models\Concerns\HasApprovals  $model
+     * @param  Model&HasApprovals  $model
      */
     public function request(Model $model, string $permission, User $requester, ?string $note = null): Approval
     {
@@ -109,7 +111,7 @@ class ApprovalService
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, User>
+     * @return Collection<int, User>
      */
     public function eligibleApprovers(Approval $approval)
     {

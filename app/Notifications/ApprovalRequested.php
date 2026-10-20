@@ -6,9 +6,7 @@ use App\Models\Approval;
 
 class ApprovalRequested extends AppNotification
 {
-    public function __construct(public Approval $approval)
-    {
-    }
+    public function __construct(public Approval $approval) {}
 
     protected function type(): string
     {

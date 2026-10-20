@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Department;
 use App\Models\User;
 use App\Support\Audit;
@@ -70,7 +71,7 @@ class UserController extends Controller
 
         return view('admin.users.show', [
             'user' => $user,
-            'activity' => \App\Models\AuditLog::query()->where('user_id', $user->id)->latest('created_at')->limit(20)->get(),
+            'activity' => AuditLog::query()->where('user_id', $user->id)->latest('created_at')->limit(20)->get(),
         ]);
     }
 

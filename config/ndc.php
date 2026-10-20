@@ -233,7 +233,6 @@ return [
         'date_format' => 'd M Y',
         'datetime_format' => 'd M Y H:i',
         'currency' => 'USD',
-        'timezone' => 'Africa/Mogadishu',
         'upload_max_kb' => 20480,
         'upload_allowed_extensions' => 'pdf,doc,docx,xls,xlsx,ppt,pptx,csv,txt,jpg,jpeg,png,gif,webp',
         'mail_notifications_enabled' => false,
