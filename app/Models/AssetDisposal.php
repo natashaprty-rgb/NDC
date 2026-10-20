@@ -32,9 +32,31 @@ class AssetDisposal extends Model
         return $this->belongsTo(User::class, 'requested_by');
     }
 
+    /**
+     * An approved retirement takes effect immediately; an approved disposal
+     * stays "approved" until the disposal itself is recorded as completed.
+     */
     public function approvalDecided(Approval $approval): void
     {
-        $this->forceFill(['status' => $approval->status === 'approved' ? 'approved' : 'rejected'])->save();
+        if ($approval->status !== 'approved') {
+            $this->forceFill(['status' => 'rejected'])->save();
+
+            return;
+        }
+
+        if ($this->action === 'retire') {
+            $this->forceFill(['status' => 'completed', 'completed_on' => $this->completed_on ?? today()])->save();
+            $this->asset?->forceFill(['status' => 'retired'])->save();
+
+            return;
+        }
+
+        $this->forceFill(['status' => 'approved'])->save();
+    }
+
+    public function isAwaitingCompletion(): bool
+    {
+        return $this->action === 'dispose' && $this->status === 'approved';
     }
 
     public function approvalTitle(): string

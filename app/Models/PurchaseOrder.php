@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\Auditable;
 use App\Models\Concerns\HasAttachments;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class PurchaseOrder extends Model
 {
-    use Auditable, HasAttachments;
+    use Auditable, HasAttachments, HasFactory;
 
     /** @var list<string> */
     protected array $auditExclude = ['reminded_at'];
@@ -63,5 +64,35 @@ class PurchaseOrder extends Model
     public function attachmentAuthorizationTarget(): Model
     {
         return $this->request;
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function canReceiveGoods(): bool
+    {
+        return in_array($this->status, ['issued', 'partially_delivered'], true);
+    }
+
+    /**
+     * Update the delivery status from the quantities received against the
+     * request's items.
+     */
+    public function syncDeliveryStatus(?\DateTimeInterface $lastReceivedOn = null): void
+    {
+        $items = $this->request->items()->get();
+        $received = $items->sum(fn (ProcurementRequestItem $i) => (float) $i->quantity_received);
+
+        if ($received <= 0) {
+            return;
+        }
+
+        $complete = $items->every(fn (ProcurementRequestItem $i) => $i->outstandingQuantity() <= 0);
+        $this->forceFill([
+            'status' => $complete ? 'delivered' : 'partially_delivered',
+            'delivered_on' => $complete ? ($lastReceivedOn ?? today()) : null,
+        ])->save();
     }
 }

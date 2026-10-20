@@ -58,4 +58,22 @@ class Supplier extends Model
     {
         return static::query()->where('status', 'active')->orderBy('name')->pluck('name', 'id')->all();
     }
+
+    /**
+     * Overall rating using per-criterion averages loaded with withAvg()
+     * (quality_avg, delivery_avg, communication_avg) when present, so list
+     * pages avoid one query per row.
+     */
+    public function overallRating(): ?float
+    {
+        if (array_key_exists('quality_avg', $this->attributes)) {
+            if ($this->attributes['quality_avg'] === null) {
+                return null;
+            }
+
+            return round(((float) $this->quality_avg + (float) $this->delivery_avg + (float) $this->communication_avg) / 3, 1);
+        }
+
+        return $this->averageRating();
+    }
 }

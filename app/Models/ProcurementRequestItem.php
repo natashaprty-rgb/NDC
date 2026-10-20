@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable(['description', 'specifications', 'quantity', 'unit', 'estimated_unit_cost', 'quantity_received'])]
 class ProcurementRequestItem extends Model
 {
+    use HasFactory;
+
     protected function casts(): array
     {
         return [

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -92,5 +93,55 @@ class ProcurementRequest extends Model
     public function approvalUrl(): string
     {
         return route('procurement.show', $this);
+    }
+
+    public function selectedQuotation(): HasOne
+    {
+        return $this->hasOne(Quotation::class)->where('is_selected', true);
+    }
+
+    /**
+     * The purchase order currently in force (cancelled orders are ignored).
+     */
+    public function activePurchaseOrder(): HasOne
+    {
+        return $this->hasOne(PurchaseOrder::class)->where('status', '!=', 'cancelled')->latest('id');
+    }
+
+    /**
+     * Quotations and purchase orders are only recorded for approved requests.
+     */
+    public function canReceiveQuotations(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    public function canBeOrdered(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    /**
+     * Requests can be cancelled until goods start arriving.
+     */
+    public function isCancellable(): bool
+    {
+        return ! in_array($this->status, ['partially_received', 'received', 'cancelled'], true);
+    }
+
+    /**
+     * Update the request status from the quantities received so far.
+     */
+    public function syncReceiptStatus(): void
+    {
+        $items = $this->items()->get();
+        $received = $items->sum(fn (ProcurementRequestItem $i) => (float) $i->quantity_received);
+
+        if ($received <= 0) {
+            return;
+        }
+
+        $complete = $items->every(fn (ProcurementRequestItem $i) => $i->outstandingQuantity() <= 0);
+        $this->forceFill(['status' => $complete ? 'received' : 'partially_received'])->save();
     }
 }
