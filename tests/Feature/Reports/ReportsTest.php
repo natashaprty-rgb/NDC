@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use App\Reports\ReportRegistry;
+use App\Support\CsvExport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -91,8 +92,8 @@ class ReportsTest extends TestCase
 
     public function test_csv_cells_are_protected_against_formula_injection(): void
     {
-        $this->assertSame("'=HYPERLINK(\"x\")", \App\Support\CsvExport::cell('=HYPERLINK("x")'));
-        $this->assertSame('-15', \App\Support\CsvExport::cell('-15'));
+        $this->assertSame("'=HYPERLINK(\"x\")", CsvExport::cell('=HYPERLINK("x")'));
+        $this->assertSame('-15', CsvExport::cell('-15'));
     }
 
     public function test_general_staff_cannot_open_reports(): void

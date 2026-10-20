@@ -152,6 +152,8 @@ code, .mono { font-family: var(--mono); font-size: .9em; }
 /* ---------- Cards & grid ---------- */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
 .card + .card { margin-top: 1rem; }
+.grid > .card + .card { margin-top: 0; }
+.stack > * + * { margin-top: 1rem; }
 .card__head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .9rem 1.1rem; border-bottom: 1px solid var(--line); }
 .card__head h2, .card__head h3 { margin: 0; }
 .card__body { padding: 1.1rem; }
@@ -353,3 +355,5 @@ legend { font-weight: 650; padding: 0 .35rem; }
 .mb-0 { margin-bottom: 0; }
 .repeater-row { display: grid; gap: .5rem; align-items: end; padding: .6rem 0; border-bottom: 1px dashed var(--line); }
 .repeater-row .field { margin-bottom: 0; }
+.table tbody th, .table tfoot th { text-transform: none; letter-spacing: 0; font-size: inherit; color: var(--ink); background: none; font-weight: 600; white-space: normal; }
+.table tfoot td, .table tfoot th { border-top: 2px solid var(--line-2); font-weight: 600; }

@@ -7,6 +7,7 @@ use App\Models\Asset;
 use App\Models\AuditLog;
 use App\Models\Budget;
 use App\Models\Correspondence;
+use App\Models\Department;
 use App\Models\Document;
 use App\Models\Expense;
 use App\Models\Meeting;
@@ -18,8 +19,11 @@ use App\Models\Staff;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\ApprovalService;
+use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 /**
@@ -95,7 +99,7 @@ class DashboardController extends Controller
         if ($user->can('assets.view')) {
             $data['tiles'][] = [
                 'label' => __('Assets'),
-                'value' => Asset::query()->whereNotIn('status', ['disposed'])->count(),
+                'value' => Asset::query()->whereNotIn('status', ['retired', 'disposed'])->count(),
                 'meta' => __(':n under maintenance', ['n' => Asset::query()->where('status', 'under_maintenance')->count()]),
                 'alert' => false,
                 'url' => $this->link('assets.index'),
@@ -106,7 +110,7 @@ class DashboardController extends Controller
             $data['tiles'][] = [
                 'label' => __('Staff'),
                 'value' => Staff::query()->where('employment_status', 'active')->count(),
-                'meta' => __(':n departments', ['n' => \App\Models\Department::query()->active()->count()]),
+                'meta' => __(':n departments', ['n' => Department::query()->active()->count()]),
                 'alert' => false,
                 'url' => $this->link('staff.index'),
             ];
@@ -152,7 +156,7 @@ class DashboardController extends Controller
      */
     private function link(string $name, mixed $parameters = []): ?string
     {
-        return \Illuminate\Support\Facades\Route::has($name) ? route($name, $parameters) : null;
+        return Route::has($name) ? route($name, $parameters) : null;
     }
 
     private function pendingApprovalCount(User $user, ApprovalService $approvals): int
@@ -171,7 +175,7 @@ class DashboardController extends Controller
     /**
      * Upcoming meetings and deadlines within the horizon, sorted by date.
      *
-     * @return Collection<int, array{date: \Carbon\CarbonInterface, type: string, title: string, url: ?string, overdue?: bool}>
+     * @return Collection<int, array{date: CarbonInterface, type: string, title: string, url: ?string, overdue?: bool}>
      */
     private function agenda(User $user, $today, $horizon): Collection
     {
@@ -184,7 +188,7 @@ class DashboardController extends Controller
 
             MeetingActionItem::query()->outstanding()->where('assigned_to', $user->id)->whereNotNull('due_date')
                 ->whereDate('due_date', '<=', $horizon)->with('meeting')->limit(10)->get()
-                ->each(fn (MeetingActionItem $a) => $items->push(['date' => $a->due_date, 'type' => __('Action point'), 'title' => \Illuminate\Support\Str::limit($a->description, 80), 'url' => $this->link('meetings.show', $a->meeting_id), 'overdue' => $a->isOverdue()]));
+                ->each(fn (MeetingActionItem $a) => $items->push(['date' => $a->due_date, 'type' => __('Action point'), 'title' => Str::limit($a->description, 80), 'url' => $this->link('meetings.show', $a->meeting_id), 'overdue' => $a->isOverdue()]));
         }
 
         if ($user->can('tasks.view')) {

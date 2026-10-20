@@ -1,0 +1,58 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        database: [sqlite, mysql]
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: ndc_test
+          MYSQL_USER: ndc
+          MYSQL_PASSWORD: ndc_ci_password
+          MYSQL_ROOT_PASSWORD: ndc_ci_root
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1"
+          --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, intl, pdo_mysql, pdo_sqlite, zip, gd, bcmath, sodium
+          coverage: none
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Prepare environment
+        run: cp .env.example .env && php artisan key:generate
+      - name: Code style
+        if: matrix.database == 'sqlite'
+        run: vendor/bin/pint --test
+      - name: Dependency vulnerability scan
+        if: matrix.database == 'sqlite'
+        run: composer audit
+      - name: Tests (SQLite)
+        if: matrix.database == 'sqlite'
+        run: php artisan test
+      - name: Tests (MySQL 8)
+        if: matrix.database == 'mysql'
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: ndc_test
+          DB_USERNAME: ndc
+          DB_PASSWORD: ndc_ci_password
+        run: php artisan test

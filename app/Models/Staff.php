@@ -34,7 +34,6 @@ class Staff extends Model
     /** Gender values => English labels (translated at render time). */
     public const GENDERS = ['female' => 'Female', 'male' => 'Male'];
 
-
     protected function casts(): array
     {
         return [
@@ -84,7 +83,6 @@ class Staff extends Model
             ->orWhere('job_title', 'like', $like)
             ->orWhere('email', 'like', $like));
     }
-
 
     /**
      * id => "Name (staff number)" pairs for select inputs.

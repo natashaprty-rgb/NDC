@@ -60,7 +60,7 @@ class BudgetReportController extends Controller
 
         $byCategory = Expense::query()->filter($filters)
             ->join('budgets', 'budgets.id', '=', 'expenses.budget_id')
-            ->selectRaw('budgets.currency as currency, expenses.category_id as category_id, expenses.status as status, SUM(expenses.amount) as total, COUNT(*) as lines')
+            ->selectRaw('budgets.currency as currency, expenses.category_id as category_id, expenses.status as status, SUM(expenses.amount) as total, COUNT(*) as line_count')
             ->groupBy('budgets.currency', 'expenses.category_id', 'expenses.status')
             ->get();
 
@@ -75,7 +75,7 @@ class BudgetReportController extends Controller
                 return [
                     'currency' => $first->currency,
                     'category' => $first->category_id ? ($names[$first->category_id] ?? __('Unknown category')) : __('Uncategorised'),
-                    'lines' => (int) $rows->sum('lines'),
+                    'lines' => (int) $rows->sum('line_count'),
                     'approved' => $cents('approved') / 100,
                     'pending' => $cents('pending') / 100,
                     'rejected' => $cents('rejected') / 100,

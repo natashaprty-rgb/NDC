@@ -46,7 +46,7 @@
                 @foreach ($rows as $row)
                     <tr>
                         @foreach ($row as $i => $cell)
-                            <td @class(['num' => in_array($i, $report->numericColumns(), true)])>{{ $cell ?? '—' }}</td>
+                            <td @class(['num' => in_array($i, $report->numericColumns(), true), 'nowrap' => $i !== 1 && mb_strlen((string) $cell) <= 24])>{{ $cell ?? '—' }}</td>
                         @endforeach
                     </tr>
                 @endforeach

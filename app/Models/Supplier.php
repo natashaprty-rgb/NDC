@@ -44,7 +44,7 @@ class Supplier extends Model
      */
     public function averageRating(): ?float
     {
-        $avg = $this->evaluations()
+        $avg = $this->evaluations()->reorder()
             ->selectRaw('AVG((quality_rating + delivery_rating + communication_rating) / 3.0) as score')
             ->value('score');
 

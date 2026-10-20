@@ -14,6 +14,9 @@ class BackupTest extends TestCase
 
     public function test_in_memory_database_backup_is_recorded_as_failed_not_assumed(): void
     {
+        if (config('database.connections.'.config('database.default').'.database') !== ':memory:') {
+            $this->markTestSkipped('Only meaningful for the in-memory SQLite test database.');
+        }
         Storage::fake('backups');
         $run = app(BackupService::class)->run();
 
