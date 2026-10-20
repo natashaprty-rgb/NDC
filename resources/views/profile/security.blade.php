@@ -86,4 +86,43 @@
             </div>
         @endif
     </div>
+
+    @can('api.access')
+        <div class="card" style="margin-top:1rem">
+            <div class="card__head"><h2>{{ __('API access tokens') }}</h2></div>
+            @if ($newToken)
+                <div class="card__body">
+                    <div class="alert alert--warning"><strong>{{ __('Copy this token now. It will not be shown again.') }}</strong>
+                        <div class="mono" style="word-break:break-all;margin-top:.4rem">{{ $newToken }}</div></div>
+                </div>
+            @endif
+            @if ($tokens->isEmpty())
+                <x-empty :message="__('No API tokens issued.')" />
+            @else
+                <div class="table-wrap"><table class="table">
+                    <thead><tr><th>{{ __('Name') }}</th><th>{{ __('Created') }}</th><th>{{ __('Last used') }}</th><th>{{ __('Expires') }}</th><th></th></tr></thead>
+                    <tbody>
+                    @foreach ($tokens as $token)
+                        <tr>
+                            <td>{{ $token->name }}</td>
+                            <td class="nowrap">{{ fmt_date($token->created_at) }}</td>
+                            <td class="nowrap">{{ fmt_date($token->last_used_at, true) }}</td>
+                            <td class="nowrap">{{ fmt_date($token->expires_at) }}</td>
+                            <td class="actions"><x-delete-button :action="route('profile.tokens.destroy', $token->id)" :label="__('Revoke')" /></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table></div>
+            @endif
+            <div class="card__foot">
+                <form method="POST" action="{{ route('profile.tokens.store') }}" class="grid" style="grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;align-items:end">
+                    @csrf
+                    <x-form.input name="token_name" :label="__('Token name')" required :help="__('For example the name of the integrating system.')" />
+                    <x-form.select name="expires_in_days" :label="__('Expires after')" :options="[30 => __(':n days', ['n' => 30]), 90 => __(':n days', ['n' => 90]), 180 => __(':n days', ['n' => 180]), 365 => __(':n days', ['n' => 365])]" value="90" :placeholder="false" />
+                    <div class="field"><button class="btn btn-primary">{{ __('Create token') }}</button></div>
+                </form>
+                <p class="small muted" style="margin:.5rem 0 0">{{ __('Tokens are read-only and act with your permissions. See docs/API.md.') }}</p>
+            </div>
+        </div>
+    @endcan
 </x-layouts.app>

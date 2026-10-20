@@ -50,6 +50,8 @@ class ProfileController extends Controller
             'qrCode' => $setupSecret ? $twoFactor->qrCodeSvg($user, $setupSecret) : null,
             'recoveryCodes' => $request->session()->get('two_factor.recovery_codes'),
             'sessions' => $this->sessions($request),
+            'tokens' => $user->can('api.access') ? $user->tokens()->latest()->get() : collect(),
+            'newToken' => $request->session()->get('api.new_token'),
         ]);
     }
 
@@ -132,6 +134,33 @@ class ProfileController extends Controller
         Audit::log('sessions_revoked', $request->user());
 
         return back()->with('success', __('All other sessions have been signed out.'));
+    }
+
+    /**
+     * Issue a read-only personal access token for integrations. The plain
+     * token is shown once and never stored.
+     */
+    public function createToken(Request $request): RedirectResponse
+    {
+        abort_unless($request->user()->can('api.access'), 403);
+        $data = $request->validate([
+            'token_name' => ['required', 'string', 'max:100'],
+            'expires_in_days' => ['required', 'integer', 'in:30,90,180,365'],
+        ]);
+
+        $token = $request->user()->createToken($data['token_name'], ['read'], now()->addDays((int) $data['expires_in_days']));
+        Audit::log('api_token_created', $request->user(), $data['token_name']);
+
+        return redirect()->route('profile.security')->with('api.new_token', $token->plainTextToken);
+    }
+
+    public function revokeToken(Request $request, int $token): RedirectResponse
+    {
+        $record = $request->user()->tokens()->whereKey($token)->firstOrFail();
+        Audit::log('api_token_revoked', $request->user(), $record->name);
+        $record->delete();
+
+        return back()->with('success', __('Token revoked.'));
     }
 
     /**

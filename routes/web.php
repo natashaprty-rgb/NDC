@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/two-factor', [ProfileController::class, 'startTwoFactor'])->name('profile.two-factor.start');
     Route::post('/profile/two-factor/confirm', [ProfileController::class, 'confirmTwoFactor'])->name('profile.two-factor.confirm');
     Route::delete('/profile/two-factor', [ProfileController::class, 'disableTwoFactor'])->name('profile.two-factor.disable');
+    Route::post('/profile/tokens', [ProfileController::class, 'createToken'])->name('profile.tokens.store');
+    Route::delete('/profile/tokens/{token}', [ProfileController::class, 'revokeToken'])->name('profile.tokens.destroy');
     Route::delete('/profile/sessions', [ProfileController::class, 'logoutOtherSessions'])->name('profile.sessions.destroy');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

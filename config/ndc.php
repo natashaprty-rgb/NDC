@@ -244,7 +244,6 @@ return [
         'backup_retention_days' => 30,
         'require_two_factor_for_admins' => false,
         'password_min_length' => 10,
-        'session_timeout_minutes' => 120,
     ],
 
     'backup' => [

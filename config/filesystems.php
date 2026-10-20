@@ -43,7 +43,7 @@ return [
         // sftp) in production so copies survive loss of the application server.
         'backups' => [
             'driver' => 'local',
-            'root' => env('BACKUP_PATH', storage_path('app/backups')),
+            'root' => env('BACKUP_PATH') ?: storage_path('app/backups'),
             'throw' => true,
             'report' => false,
         ],
