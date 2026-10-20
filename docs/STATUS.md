@@ -113,7 +113,7 @@ Other verification:
 - **Budgets**: a closed budget cannot be reopened. The dashboard adds amounts
   across currencies; budget pages and reports show each currency separately.
 - **Procurement**: one active purchase order per request.
-- **Assets**: no barcode or QR label printing.
+- **Assets**: no barcode or QR label printing. On MySQL, technical specifications may be displayed in a different order from the one entered, because MySQL's JSON column type re-sorts keys.
 - **Exports**: module print views are browser-printable HTML. PDF and CSV
   files come from the central Reports module.
 - **API** is read-only in Version 1.

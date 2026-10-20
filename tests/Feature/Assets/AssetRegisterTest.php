@@ -55,7 +55,8 @@ class AssetRegisterTest extends TestCase
         $this->assertSame('NDC/AST/'.now()->year.'/0001', $asset->asset_tag);
         $this->assertSame('available', $asset->status);
         $this->assertSame('USD', $asset->currency);
-        $this->assertSame(['Rack position' => 'R2-U14', 'Power draw' => '650 W'], $asset->specifications);
+        // MySQL's JSON type may reorder keys, so compare contents only.
+        $this->assertEquals(['Rack position' => 'R2-U14', 'Power draw' => '650 W'], $asset->specifications);
         $this->assertSame($officer->id, $asset->created_by);
         $this->assertDatabaseHas('audit_logs', ['event' => 'created', 'auditable_type' => 'asset', 'auditable_id' => $asset->id]);
 
