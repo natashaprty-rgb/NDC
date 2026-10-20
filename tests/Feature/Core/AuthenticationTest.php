@@ -140,4 +140,14 @@ class AuthenticationTest extends TestCase
 
         $this->actingAs($user->fresh())->get(route('profile.edit'))->assertSee('lang="so"', false);
     }
+
+    public function test_language_chosen_before_sign_in_is_kept(): void
+    {
+        $user = $this->userWithRole('General Staff', ['email' => 'lang@ndc.test', 'locale' => 'en']);
+
+        $this->post(route('locale.switch'), ['locale' => 'so']);
+        $this->post('/login', ['email' => 'lang@ndc.test', 'password' => 'password']);
+
+        $this->assertSame('so', $user->fresh()->locale);
+    }
 }

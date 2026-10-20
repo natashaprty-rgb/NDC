@@ -71,7 +71,10 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap(self::MORPH_MAP);
 
         // Each module keeps its interface translations in lang/modules/{module}/{locale}.json.
-        foreach (glob(lang_path('modules/*'), GLOB_ONLYDIR) ?: [] as $path) {
+        // "core" is registered last so shared wording wins over module copies.
+        $paths = glob(lang_path('modules/*'), GLOB_ONLYDIR) ?: [];
+        usort($paths, fn ($a, $b) => (basename($a) === 'core') <=> (basename($b) === 'core') ?: strcmp($a, $b));
+        foreach ($paths as $path) {
             $this->app['translator']->addJsonPath($path);
         }
 
@@ -117,10 +120,13 @@ class AppServiceProvider extends ServiceProvider
     private function registerAuthAuditing(): void
     {
         Event::listen(Login::class, function (Login $event) {
-            $event->user->forceFill([
-                'last_login_at' => now(),
-                'last_login_ip' => request()->ip(),
-            ])->saveQuietly();
+            $attributes = ['last_login_at' => now(), 'last_login_ip' => request()->ip()];
+            // A language chosen on the sign-in page becomes the user's preference.
+            $chosen = request()->hasSession() ? request()->session()->get('locale') : null;
+            if ($chosen && array_key_exists($chosen, config('ndc.locales'))) {
+                $attributes['locale'] = $chosen;
+            }
+            $event->user->forceFill($attributes)->saveQuietly();
             Audit::log('login', $event->user, __('Signed in'), userId: $event->user->getAuthIdentifier());
         });
 
