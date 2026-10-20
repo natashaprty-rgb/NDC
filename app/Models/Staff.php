@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\Auditable;
 use App\Models\Concerns\HasAttachments;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +30,16 @@ class Staff extends Model
 
     /** @var list<string> */
     protected array $auditMask = self::SENSITIVE;
+
+    /** Gender values => English labels (translated at render time). */
+    public const GENDERS = ['female' => 'Female', 'male' => 'Male'];
+
+    /**
+     * Set on a clone of the record when it is authorised on behalf of one of
+     * its attachments (CVs, certificates), so the policy can apply the
+     * stricter attachment rule. Never persisted.
+     */
+    public bool $authorisingAttachments = false;
 
     protected function casts(): array
     {
@@ -61,5 +72,47 @@ class Staff extends Model
     public function trainings(): HasMany
     {
         return $this->hasMany(StaffTraining::class)->orderByDesc('start_date');
+    }
+
+    /**
+     * Search by name, staff number, job title or official e-mail.
+     */
+    public function scopeSearch(Builder $query, ?string $term): void
+    {
+        $term = trim((string) $term);
+        if ($term === '') {
+            return;
+        }
+
+        $like = "%{$term}%";
+        $query->where(fn (Builder $q) => $q->where('full_name', 'like', $like)
+            ->orWhere('staff_number', 'like', $like)
+            ->orWhere('job_title', 'like', $like)
+            ->orWhere('email', 'like', $like));
+    }
+
+    /**
+     * Attachments (CVs, certificates) are authorised through a flagged copy
+     * of the staff record; see StaffPolicy::view().
+     */
+    public function attachmentAuthorizationTarget(): self
+    {
+        $target = clone $this;
+        $target->authorisingAttachments = true;
+
+        return $target;
+    }
+
+    /**
+     * id => "Name (staff number)" pairs for select inputs.
+     *
+     * @return array<int, string>
+     */
+    public static function options(?int $exceptId = null): array
+    {
+        return static::query()
+            ->when($exceptId, fn (Builder $q) => $q->whereKeyNot($exceptId))
+            ->orderBy('full_name')->get(['id', 'full_name', 'staff_number'])
+            ->mapWithKeys(fn (Staff $s) => [$s->id => $s->full_name.' ('.$s->staff_number.')'])->all();
     }
 }

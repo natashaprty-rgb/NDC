@@ -129,6 +129,62 @@ class Document extends Model
         return $this->expiry_date !== null && $this->expiry_date->lt(today());
     }
 
+    /**
+     * Not yet expired, but the expiry / renewal date falls within $days days.
+     */
+    public function scopeExpiringWithin(Builder $query, int $days): void
+    {
+        $query->whereNotNull('expiry_date')
+            ->whereDate('expiry_date', '>=', today())
+            ->whereDate('expiry_date', '<=', today()->addDays($days));
+    }
+
+    public function scopeExpired(Builder $query): void
+    {
+        $query->whereNotNull('expiry_date')->whereDate('expiry_date', '<', today());
+    }
+
+    public function scopeSearch(Builder $query, ?string $term): void
+    {
+        $term = trim((string) $term);
+        if ($term === '') {
+            return;
+        }
+
+        $like = "%{$term}%";
+        $query->where(fn (Builder $q) => $q->where('title', 'like', $like)
+            ->orWhere('reference_number', 'like', $like)
+            ->orWhere('description', 'like', $like));
+    }
+
+    public function isExpiringWithin(int $days): bool
+    {
+        return $this->expiry_date !== null && ! $this->isExpired() && $this->expiry_date->lte(today()->addDays($days));
+    }
+
+    public function isReviewDue(): bool
+    {
+        return $this->review_date !== null && $this->review_date->lte(today());
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived_at !== null;
+    }
+
+    /**
+     * Record a view or download in the document access log.
+     */
+    public function logAccess(string $action, ?User $user, ?DocumentVersion $version = null, ?string $ip = null): DocumentAccessLog
+    {
+        return $this->accessLogs()->create([
+            'document_version_id' => $version?->id,
+            'user_id' => $user?->id,
+            'action' => $action,
+            'ip_address' => $ip,
+        ]);
+    }
+
     public function approvalDecided(Approval $approval): void
     {
         $this->forceFill(['status' => $approval->status === 'approved' ? 'approved' : 'rejected'])->save();
