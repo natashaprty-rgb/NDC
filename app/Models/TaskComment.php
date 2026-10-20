@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Models\Concerns\HasAttachments;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable(['user_id', 'body', 'is_evidence'])]
 class TaskComment extends Model
 {
-    use HasAttachments;
+    use HasAttachments, HasFactory;
 
     protected function casts(): array
     {

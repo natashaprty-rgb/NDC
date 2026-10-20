@@ -125,6 +125,21 @@ class Project extends Model
     }
 
     /**
+     * Share of the project's tasks (excluding cancelled ones) that are
+     * completed, for information only; project progress is entered manually.
+     */
+    public function taskCompletion(): ?int
+    {
+        $counts = $this->tasks()->where('status', '!=', 'cancelled')
+            ->selectRaw('count(*) as total, sum(case when status = ? then 1 else 0 end) as done', ['completed'])
+            ->toBase()->first();
+
+        $total = (int) ($counts->total ?? 0);
+
+        return $total === 0 ? null : (int) round(((int) $counts->done) * 100 / $total);
+    }
+
+    /**
      * id => "CODE — Title" pairs for select inputs.
      *
      * @return array<int, string>

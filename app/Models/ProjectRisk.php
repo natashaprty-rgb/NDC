@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Models\Concerns\Auditable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable(['type', 'title', 'description', 'likelihood', 'impact', 'status', 'corrective_action', 'owner_id', 'identified_on', 'resolved_on'])]
 class ProjectRisk extends Model
 {
-    use Auditable;
+    use Auditable, HasFactory;
 
     protected function casts(): array
     {
