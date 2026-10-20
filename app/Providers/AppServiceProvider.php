@@ -77,9 +77,12 @@ class AppServiceProvider extends ServiceProvider
 
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
 
-        // Super Administrators pass every permission check.
-        Gate::before(function (Models\User $user) {
-            return $user->isActive() && $user->isSuperAdmin() ? true : null;
+        // Super Administrators hold every permission ("module.action"
+        // abilities). Policy abilities ("update", "delete", ...) still run, so
+        // record status rules such as "an approved budget cannot be edited"
+        // apply to them too.
+        Gate::before(function (Models\User $user, string $ability) {
+            return str_contains($ability, '.') && $user->isActive() && $user->isSuperAdmin() ? true : null;
         });
 
         Password::defaults(function () {

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\Auditable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['type', 'description', 'assigned_to', 'due_date', 'status', 'completed_at', 'notes'])]
 class MeetingActionItem extends Model
 {
-    use Auditable;
+    use Auditable, HasFactory;
 
     /** @var list<string> */
     protected array $auditExclude = ['reminded_at'];
@@ -37,6 +38,11 @@ class MeetingActionItem extends Model
     public function scopeOutstanding(Builder $query): void
     {
         $query->whereIn('status', ['open', 'in_progress']);
+    }
+
+    public function scopeOverdue(Builder $query): void
+    {
+        $query->outstanding()->whereNotNull('due_date')->whereDate('due_date', '<', today());
     }
 
     public function isOverdue(): bool

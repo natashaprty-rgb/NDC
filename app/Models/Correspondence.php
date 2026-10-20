@@ -110,6 +110,45 @@ class Correspondence extends Model
             || in_array($user->id, [$this->assigned_to, $this->responsible_officer_id, $this->created_by], true);
     }
 
+    public function isClosed(): bool
+    {
+        return $this->status === 'closed';
+    }
+
+    /**
+     * Whether a workflow action is possible in the letter's current state
+     * (independent of who is asking).
+     */
+    public function allowsAction(string $action): bool
+    {
+        if ($this->isClosed()) {
+            return false;
+        }
+
+        return match ($action) {
+            'respond' => $this->direction === 'incoming' && $this->status !== 'responded',
+            'send' => $this->direction === 'outgoing' && $this->status !== 'sent',
+            default => true,
+        };
+    }
+
+    /**
+     * Add an entry to the letter's follow-up history.
+     */
+    public function recordAction(string $action, ?User $by = null, ?int $toUserId = null, ?string $note = null, mixed $dueDate = null): CorrespondenceAction
+    {
+        /** @var CorrespondenceAction $entry */
+        $entry = $this->actions()->create([
+            'user_id' => $by?->id,
+            'action' => $action,
+            'to_user_id' => $toUserId,
+            'note' => $note,
+            'due_date' => $dueDate,
+        ]);
+
+        return $entry;
+    }
+
     public function isOverdue(): bool
     {
         return in_array($this->status, self::OPEN_STATUSES, true)

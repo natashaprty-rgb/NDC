@@ -63,6 +63,15 @@ class Meeting extends Model
         return $this->belongsTo(User::class, 'minutes_recorded_by');
     }
 
+    /**
+     * Meetings that overlap the given period (used by the calendar).
+     */
+    public function scopeBetween(Builder $query, \DateTimeInterface $from, \DateTimeInterface $to): void
+    {
+        $query->where('start_at', '<=', $to)
+            ->where(fn (Builder $q) => $q->where('start_at', '>=', $from)->orWhere('end_at', '>=', $from));
+    }
+
     public function scopeUpcoming(Builder $query): void
     {
         $query->where('status', 'scheduled')->where('start_at', '>=', now())->orderBy('start_at');
