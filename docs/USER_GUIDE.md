@@ -62,7 +62,7 @@ Project managers and officers record projects with objectives, location,
 dates, department, manager, planned budget and progress. Inside a project:
 milestones and deliverables, risks/challenges/delays with corrective actions,
 contractors, consultants and contacts, team members, tasks, documents and
-evidence, and the history of changes. **Print report** produces a project
+evidence, and the history of changes. **Progress report** opens a printable
 progress report. Projects are archived, never lost.
 
 ## Documents
@@ -98,7 +98,7 @@ and external guests). Invited staff are notified and reminded the day
 before. Prepare the agenda, attach documents, then record minutes, decisions
 and action points with responsible persons and deadlines. Assignees update
 the status of their action points. The **calendar** shows meetings and
-action-point deadlines by month; **Print minutes** produces formal minutes.
+action-point deadlines by month; **Printable minutes** produces formal minutes.
 
 ## Assets
 
