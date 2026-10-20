@@ -69,7 +69,8 @@ Other verification:
 - **MySQL**: the whole suite also passes on MariaDB 10.11 (223 passed, 1
   SQLite-only test skipped). That run found two MySQL-only SQL errors, which
   were fixed. CI (`.github/workflows/tests.yml`) runs the suite on SQLite and
-  MySQL 8, along with code-style checks and `composer audit`.
+  MySQL 8.0, along with code-style checks and `composer audit`; both jobs
+  pass.
 - **Backup and restore**: tested end-to-end on SQLite and on MariaDB. The
   dump is created, the archive is verified, and the restore test loaded it
   into a scratch database and restored 57 tables.
