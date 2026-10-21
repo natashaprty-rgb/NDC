@@ -16,10 +16,11 @@ the *System Requirements & Scope of Work, Version 1.0*.
 
 ```bash
 composer install
-cp .env.example .env            # for local development set DB_CONNECTION=sqlite, APP_ENV=local, APP_DEBUG=true
+cp .env.example .env            # then edit it: see docs/LOCAL_SETUP.md
 php artisan key:generate
 php artisan migrate --seed      # schema, permissions, roles, reference lists
 php artisan ndc:create-admin    # first Super Administrator
+php artisan ndc:doctor          # checks the setup and explains any problem
 php artisan serve
 ```
 
@@ -32,6 +33,7 @@ Run the tests: `php artisan test`.
 
 | Document | Audience |
 | --- | --- |
+| [Local setup (Windows / XAMPP)](docs/LOCAL_SETUP.md) | Anyone trying the system on their computer |
 | [Installation & deployment](docs/INSTALLATION.md) | Server administrators |
 | [Backup & restoration guide](docs/BACKUP_AND_RESTORE.md) | Server administrators |
 | [Administrator guide](docs/ADMIN_GUIDE.md) | System administrators |

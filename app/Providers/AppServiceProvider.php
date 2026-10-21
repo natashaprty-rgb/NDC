@@ -98,7 +98,8 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::defaultView('components.pagination');
 
-        if ($this->app->isProduction()) {
+        // Generate https:// links whenever the site is configured for HTTPS.
+        if (str_starts_with((string) config('app.url'), 'https://')) {
             URL::forceScheme('https');
         }
 
