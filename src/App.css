@@ -1,0 +1,797 @@
+@font-face {
+  font-family: 'Punk Babe';
+  src: url('./assets/punkbabe/PUNKBABE TRIAL.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DK Crayonista';
+  src: url('./assets/dk_crayonista/DK Crayonista.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Color Palette - Updated to use centralized color system */
+  /* Pink palette - from colors.ts */
+  --color-pink-50: #FFF5F7;        /* Light pink background */
+  --color-pink-100: #FAE8ED;       /* Lavender blush */
+  --color-pink-200: #FDD5DF;       /* Mimi pink */
+  --color-pink-300: #EABEC3;       /* Main dusty pink */
+  --color-pink-400: #D9A5AC;       /* Darker dusty pink */
+  --color-pink-500: #C88B95;       /* Even darker dusty pink */
+  --color-pink-600: #B8727C;       /* Strong dusty pink */
+  --color-pink-700: #A6707B;       /* Navigation text */
+  --color-pink-800: #8B5A65;       /* Main text pink (WCAG AA) */
+
+  /* Dark theme colors */
+  --color-dark-800: #1E293B;       /* Very dark gray */
+  --color-dark-900: #0F172A;       /* Almost black */
+
+  /* Base colors */
+  --color-white: #FFFFFF;
+  --color-transparent: transparent;
+
+  /* Legacy variables for backward compatibility */
+  --lavender-blush: var(--color-pink-100);
+  --mimi-pink: var(--color-pink-200);
+  --dusty-pink: var(--color-pink-300);
+  --dusty-pink-dark: var(--color-pink-400);
+  --dusty-pink-darker: var(--color-pink-500);
+  --white: var(--color-white);
+  --light-pink-bg: var(--color-pink-50);
+  --text-pink: var(--color-pink-800);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Prevent default link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover, a:visited, a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus,
+[tabindex]:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--dusty-pink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #B8727C; /* Darker dusty pink for better contrast */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 0 0 4px 0;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--white);
+  color: var(--text-pink);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--white);
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Navigation Styles */
+.navigation {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 99999 !important;
+}
+
+/* Desktop navigation - show by default */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Dark mode toggle icon fix */
+.theme-toggle__expand {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  color: inherit !important;
+}
+
+.theme-toggle__expand svg {
+  width: 22px !important;
+  height: 22px !important;
+  display: block !important;
+}
+
+/* Fix for svg paths in both sun and moon states */
+.theme-toggle__expand svg > * {
+  fill: currentColor !important;
+}
+
+/* Ensure visibility in mobile menu */
+.mobile-menu .theme-toggle__expand,
+.mobile-menu .theme-toggle__expand svg {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Mobile menu button - hidden by default */
+.mobile-menu-btn {
+  display: none !important;
+}
+
+.dark .navigation {
+  background: rgba(10, 15, 27, 0.4);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(234, 190, 195, 0.1);
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+}
+
+.navigation.scrolled {
+  background: rgba(255, 232, 239, 0.6);
+  border-bottom: 1px solid rgba(255, 194, 209, 0.2);
+  box-shadow: 0 4px 30px rgba(255, 194, 209, 0.12);
+}
+
+.dark .navigation.scrolled {
+  background: rgba(10, 15, 27, 0.6);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(234, 190, 195, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.signature-name {
+  font-family: 'Punk Babe', sans-serif;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--color-pink-500) 0%, var(--color-pink-600) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--color-pink-500);
+  margin: 0;
+  font-weight: normal;
+  letter-spacing: 2px;
+  filter: drop-shadow(0 2px 4px rgba(200, 139, 149, 0.3));
+  flex-shrink: 0;
+  line-height: 1;
+  padding-top: 0.2rem;
+  /* Button reset styles for accessibility */
+  padding: 0.2rem 0 0 0;
+  text-align: left;
+}
+
+/* Apply gradient text effect only when supported */
+@supports (-webkit-background-clip: text) {
+  .signature-name {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-tab {
+  background: none;
+  border: none;
+  color: var(--text-pink);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem; /* Increased for 44px touch target */
+  min-height: 44px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  outline: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-tab:focus {
+  outline: none;
+}
+
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--dusty-pink-darker);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-tab:hover::after {
+  width: 100%;
+}
+
+.nav-tab.active {
+  color: var(--text-pink);
+  font-weight: 600;
+}
+
+.nav-tab.active::after {
+  width: 100%;
+  background: var(--dusty-pink-darker);
+}
+
+/* Main Content */
+.main-content {
+  padding-top: 80px;
+}
+
+/* Section Styles */
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.section-content {
+  max-width: 1200px;
+  width: 100%;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+  padding: 3rem;
+  box-shadow: none;
+  border: none;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.section h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--dusty-pink) 0%, var(--dusty-pink-darker) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-pink);
+  margin-bottom: 1rem;
+}
+
+/* Hero Section Styles */
+.hero-section {
+  min-height: 35vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  padding: 1rem 0;
+}
+
+.hero-content {
+  text-align: center;
+  padding: 1rem;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+.ascii-container {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 60px;
+}
+
+.ascii-morph-text {
+  display: block;
+  width: 100%;
+}
+
+.ascii-morph-text span {
+  transition: color 0.3s ease;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  margin: 0.25rem 0;
+  font-weight: 600;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.hero-subtitle span {
+  background: linear-gradient(135deg, var(--dusty-pink) 0%, var(--dusty-pink-darker) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Theme-specific overrides for hero subtitle */
+.hero-subtitle-light {
+  background: linear-gradient(135deg, var(--color-pink-600) 0%, var(--color-pink-800) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.hero-subtitle-dark {
+  background: linear-gradient(135deg, var(--color-pink-300) 0%, var(--color-pink-500) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin: 1.2rem 0 1rem 0;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-action-btn {
+  background: transparent;
+  border: 2px solid var(--dusty-pink);
+  color: var(--dusty-pink-darker);
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--dusty-pink);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.hero-action-btn:hover {
+  color: var(--white);
+  border-color: var(--dusty-pink-darker);
+  transform: translateX(2px);
+}
+
+.hero-action-btn:hover::before {
+  left: 0;
+}
+
+/* Dark mode styles for hero action buttons */
+.dark .hero-action-btn {
+  color: #FDD5DF;
+  border-color: #EABEC3;
+}
+
+.dark .hero-action-btn::before {
+  background: #EABEC3;
+}
+
+.dark .hero-action-btn:hover {
+  color: #0A0F1B;
+  border-color: #FDD5DF;
+}
+
+.hero-description {
+  font-size: 0.9rem;
+  color: var(--text-pink);
+  margin: 0.25rem 0 1rem;
+}
+
+/* Draggable Stars */
+.draggable-star {
+  animation: twinkle 3s infinite;
+  z-index: 1 !important;
+}
+
+.draggable-star:nth-child(odd) {
+  animation-delay: 0.5s;
+}
+
+.draggable-star:nth-child(even) {
+  animation-delay: 1s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.8;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(10deg);
+  }
+}
+
+.draggable-star:hover {
+  filter: brightness(1.2);
+}
+
+/* Ensure project cards are above stars */
+#projects .grid > * {
+  position: relative;
+  z-index: 20;
+  background: white;
+}
+
+.dark #projects .grid > * {
+  background: rgb(31, 41, 55);
+}
+
+.scroll-down-btn {
+  background: linear-gradient(135deg, var(--dusty-pink) 0%, var(--dusty-pink-darker) 100%);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(234, 190, 195, 0.3);
+  outline: none;
+}
+
+.scroll-down-btn:focus {
+  outline: none;
+}
+
+.scroll-down-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 190, 195, 0.5);
+}
+
+/* Project Buttons */
+.project-btn {
+  background: linear-gradient(135deg, var(--dusty-pink) 0%, var(--dusty-pink-darker) 100%);
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 1.25rem; /* Increased for touch targets */
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(234, 190, 195, 0.4);
+  outline: none;
+}
+
+.project-btn:focus {
+  outline: none;
+}
+
+.project-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 190, 195, 0.5);
+}
+
+.project-btn-outline {
+  background: var(--white);
+  color: var(--dusty-pink-darker);
+  border: 2px solid var(--dusty-pink);
+  padding: calc(0.75rem - 2px) calc(1.25rem - 2px); /* Increased for touch targets */
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.dark .project-btn-outline {
+  background: rgb(31, 41, 55);
+  color: #EABEC3;
+  border-color: #D9A5AC;
+}
+
+.project-btn-outline:focus {
+  outline: none;
+}
+
+.project-btn-outline:hover {
+  background: var(--lavender-blush);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(234, 190, 195, 0.3);
+}
+
+.dark .project-btn-outline:hover {
+  background: rgba(234, 190, 195, 0.1);
+}
+
+/* Typewriter styles */
+.typewriter {
+  display: inline-block;
+  min-width: 200px;
+  text-align: left;
+  margin-left: 0.5rem;
+}
+
+.cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
+  color: var(--dusty-pink-darker);
+  font-weight: normal;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .signature-name {
+    font-size: 2rem;
+  }
+  
+  .main-content {
+    padding-top: 70px;
+  }
+  
+  .nav-container {
+    padding: 0 1rem;
+  }
+  
+  /* Hide desktop nav on mobile */
+  .desktop-nav {
+    display: none !important;
+  }
+  
+  /* Show mobile menu button on mobile */
+  .mobile-menu-btn {
+    display: block !important;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Mobile menu styles */
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .mobile-menu.open {
+    max-height: 400px;
+  }
+  
+  .mobile-nav-tab {
+    min-height: 44px;
+    width: 100%;
+  }
+  
+  .mobile-nav-tab:hover {
+    background: rgba(234, 190, 195, 0.1);
+  }
+  
+  .dark .mobile-nav-tab:hover {
+    background: rgba(234, 190, 195, 0.05);
+  }
+  
+  .section h2 {
+    font-size: 2rem;
+  }
+  
+  .section p {
+    font-size: 1rem;
+  }
+  
+  .section-content {
+    padding: 2rem;
+  }
+  
+  .ascii-text {
+    font-size: clamp(0.4rem, 1.5vw, 0.8rem);
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .ascii-container {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* Fix hamburger menu positioning on very small screens */
+  .mobile-menu-btn {
+    position: relative !important;
+    z-index: 1001 !important;
+  }
+
+  .nav-container {
+    padding: 0 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Extra small screens (iPhone SE and similar) */
+@media (max-width: 375px) {
+  .nav-container {
+    padding: 0 0.75rem !important;
+  }
+
+  .signature-name {
+    font-size: 1.75rem !important;
+  }
+
+  .mobile-menu-btn {
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .ascii-container {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  /* Ensure containers don't cause overflow */
+  .container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Force all sections to respect viewport width */
+  * {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Fix modal on very small screens */
+  .fixed.inset-0 {
+    padding: 0.5rem !important;
+  }
+
+  /* Ensure carousel images display properly */
+  .relative.w-full.bg-black {
+    min-height: 250px !important;
+    max-height: 70vh !important;
+  }
+}
+
+/* Project carousel slide animations */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

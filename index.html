@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
+    <meta name="description" content="Nasteho Jelle Hassan is a Full Stack Developer and Graphic Designer from Mogadishu, Somalia, building modern, responsive, and user-friendly web applications." />
+    <meta name="author" content="Nasteho Jelle Hassan" />
+    <meta name="keywords" content="Nasteho Jelle, Nasteho Jelle Hassan, Full Stack Developer, Graphic Designer, UI/UX Designer, Web Developer, React Developer, PHP Developer, Somalia, Mogadishu, Portfolio" />
+    <meta name="robots" content="index, follow" />
+    <!-- Once this site is deployed, set the real URL here and as the og:url below -->
+    <!-- <link rel="canonical" href="https://your-deployed-domain.com/" /> -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nasteho Jelle Hassan | Full Stack Developer & Graphic Designer" />
+    <meta property="og:description" content="Full Stack Developer and Graphic Designer from Mogadishu, Somalia, passionate about building modern, responsive, and user-friendly web applications." />
+    <meta property="og:image" content="/profile-og.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nasteho Jelle Hassan | Full Stack Developer & Graphic Designer" />
+    <meta name="twitter:description" content="Full Stack Developer and Graphic Designer from Mogadishu, Somalia, passionate about building modern, responsive, and user-friendly web applications." />
+    <meta name="twitter:image" content="/profile-og.jpg" />
+
+    <!-- DNS prefetch and preconnect for faster resource loading -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload critical hero photo -->
+    <link rel="preload" as="image" href="/src/assets/profile-hero.webp" type="image/webp" fetchpriority="high">
+    <!-- Preload the decorative stickers used around the hero photo -->
+    <link rel="preload" as="image" href="/src/assets/stickers/sticker_1.webp" type="image/webp">
+    <link rel="preload" as="image" href="/src/assets/stickers/sticker_4.webp" type="image/webp">
+    <!-- Font preloading to reduce network dependency chain -->
+    <link rel="preload" as="font" href="/src/assets/punkbabe/PUNKBABE TRIAL.ttf" type="font/ttf" crossorigin>
+    <link rel="preload" as="font" href="/src/assets/dk_crayonista/DK Crayonista.ttf" type="font/ttf" crossorigin>
+    <title>Nasteho Jelle Hassan | Full Stack Developer & Graphic Designer</title>
+    <style>
+      /* Critical CSS for initial render - Above the fold styles */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        background: #FFFFFF;
+        color: #8B5A65;
+        line-height: 1.6;
+      }
+      /* Navigation critical styles */
+      .navigation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(255, 232, 239, 0.4);
+        backdrop-filter: blur(20px);
+        padding: 1rem 0;
+      }
+      .main-content { padding-top: 80px; }
+      /* About section critical styles */
+      .about-section {
+        min-height: 100vh;
+        background: linear-gradient(180deg, rgb(255 232 239) 0%, rgb(254 245 245) 100%);
+        padding: 2rem 0;
+      }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+      .text-center { text-align: center; }
+      /* Loading states for lazy components */
+      .loading-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        color: #6c757d;
+      }
+      /* Performance optimizations */
+      .will-change-transform { will-change: transform; }
+      .will-change-opacity { will-change: opacity; }
+      .gpu-accelerated { transform: translateZ(0); }
+      /* Optimize repaints and reflows */
+      img, picture {
+        content-visibility: auto;
+        contain-intrinsic-size: 0 200px;
+      }
+      /* Optimize animations - removed global transform-style that breaks fixed positioning */
+      /* Font faces with swap for better performance */
+      @font-face {
+        font-family: 'Punk Babe';
+        src: url('/src/assets/punkbabe/PUNKBABE TRIAL.ttf') format('truetype');
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'DK Crayonista';
+        src: url('/src/assets/dk_crayonista/DK Crayonista.ttf') format('truetype');
+        font-display: swap;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
