@@ -1,12 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Calendar, MapPin } from 'lucide-react';
+import { Calendar, ExternalLink, MapPin } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
+
+interface ExperienceEntry {
+  title: string;
+  company?: string;
+  location?: string;
+  period: string;
+  description: string[];
+  link?: { label: string; href: string };
+}
 
 const Experience = () => {
   const { isDarkMode } = useDarkMode();
   const themeColors = useThemeColors();
-  const experiences = [
+  const experiences: ExperienceEntry[] = [
+    {
+      title: "Graphic Design Teacher",
+      period: "2 months",
+      description: [
+        "Taught graphic design to students over a two-month period",
+        "Supported students' creative development and their understanding of visual communication and design principles",
+      ],
+      link: { label: "View LinkedIn post", href: "https://lnkd.in/p/e7XJUe6C" }
+    },
     {
       title: "Freelance Web Developer",
       company: "Self-Employed",
@@ -81,17 +99,19 @@ const Experience = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <CardTitle className="text-2xl" style={{ color: isDarkMode ? themeColors.colors.pink[300] : themeColors.colors.pink[400] }}>{exp.title}</CardTitle>
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-400 mt-1">{exp.company}</p>
+                    {exp.company && <p className="text-lg font-semibold text-gray-700 dark:text-gray-400 mt-1">{exp.company}</p>}
                   </div>
                   <div className="text-right">
                     <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                       <Calendar className="h-4 w-4" />
                       <span className="text-sm">{exp.period}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                      <MapPin className="h-4 w-4" />
-                      <span className="text-sm">{exp.location}</span>
-                    </div>
+                    {exp.location && (
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <MapPin className="h-4 w-4" />
+                        <span className="text-sm">{exp.location}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardHeader>
@@ -104,6 +124,21 @@ const Experience = () => {
                     </li>
                   ))}
                 </ul>
+                {exp.link && (
+                  <div className="flex flex-wrap gap-3 pt-2 mt-3 border-t" style={{ borderColor: themeColors.card.border }}>
+                    <a
+                      href={exp.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium mt-3 hover:opacity-75 transition-opacity"
+                      style={{ color: themeColors.text.pink }}
+                      aria-label={`${exp.link.label} about ${exp.title} (opens in new tab)`}
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      {exp.link.label}
+                    </a>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}

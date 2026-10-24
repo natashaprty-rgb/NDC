@@ -5,7 +5,7 @@ import { publicUrl } from '../../lib/publicUrl';
 
 const highlights = [
   { icon: GraduationCap, label: "B.Sc. Computer Science & IT", sub: "CGPA 4.5 (A) — Benadir University" },
-  { icon: Briefcase, label: "3 Roles", sub: "Web dev, graphic design & admin coordination" },
+  { icon: Briefcase, label: "4 Roles", sub: "Web dev, graphic design, teaching & admin coordination" },
   { icon: CodeXml, label: "Full-Stack + Design", sub: "React, Node.js, PHP, MySQL, MongoDB" },
   { icon: Award, label: "17+ Certificates", sub: "Academic, professional & online courses" }
 ];

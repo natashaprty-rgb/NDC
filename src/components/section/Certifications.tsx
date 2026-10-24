@@ -14,7 +14,10 @@ interface Certificate {
   issuer: string;
   date: string;
   category: CertificateCategory;
-  file: string;
+  // PDF in public/certificates; entries without one link to their source post instead
+  file?: string;
+  sourceUrl?: string;
+  description?: string;
   featured?: string;
 }
 
@@ -72,6 +75,15 @@ const certificates: Certificate[] = [
     date: 'Dec 2025',
     category: 'Professional Training',
     file: publicUrl('/certificates/somali-network-operators-group.pdf'),
+  },
+  {
+    id: 'somnog9-cybersecurity',
+    title: 'SomNOG9 Cybersecurity Workshop',
+    issuer: 'Somali Network Operators Group',
+    date: '2026',
+    category: 'Professional Training',
+    description: 'Completed the cybersecurity workshop at SomNOG9, Somalia’s annual network operators and ICT gathering, as part of my continued professional development in cybersecurity.',
+    sourceUrl: 'https://lnkd.in/p/e_jDE78q',
   },
   {
     id: 'tabaarak',
@@ -195,7 +207,7 @@ const Certifications = () => {
           className="text-center mb-8 text-sm"
           style={{ color: isDarkMode ? themeColors.colors.dark[300] : themeColors.colors.dark[600] }}
         >
-          {certificates.length} certificates from academic, professional, and online learning
+          {certificates.filter((cert) => cert.file).length} certificates from academic, professional, and online learning
         </p>
 
         {/* Category filters */}
@@ -282,29 +294,53 @@ const Certifications = () => {
                   >
                     {cert.date}
                   </p>
+                  {cert.description && (
+                    <p
+                      className="text-xs leading-relaxed mb-4"
+                      style={{ color: isDarkMode ? themeColors.colors.dark[300] : themeColors.colors.dark[600] }}
+                    >
+                      {cert.description}
+                    </p>
+                  )}
 
                   <div className="flex gap-2 mt-auto pt-2">
-                    <a
-                      href={cert.file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-opacity hover:opacity-80"
-                      style={{ backgroundColor: themeColors.interactive.primary, color: themeColors.text.accent }}
-                      aria-label={`View ${cert.title} certificate (opens in new tab)`}
-                    >
-                      <ExternalLink className="h-3.5 w-3.5" />
-                      View
-                    </a>
-                    <a
-                      href={cert.file}
-                      download
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-opacity hover:opacity-80"
-                      style={{ backgroundColor: themeColors.colors.pink[500], color: themeColors.colors.white }}
-                      aria-label={`Download ${cert.title} certificate`}
-                    >
-                      <Download className="h-3.5 w-3.5" />
-                      Download
-                    </a>
+                    {cert.file ? (
+                      <>
+                        <a
+                          href={cert.file}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-opacity hover:opacity-80"
+                          style={{ backgroundColor: themeColors.interactive.primary, color: themeColors.text.accent }}
+                          aria-label={`View ${cert.title} certificate (opens in new tab)`}
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                          View
+                        </a>
+                        <a
+                          href={cert.file}
+                          download
+                          className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-opacity hover:opacity-80"
+                          style={{ backgroundColor: themeColors.colors.pink[500], color: themeColors.colors.white }}
+                          aria-label={`Download ${cert.title} certificate`}
+                        >
+                          <Download className="h-3.5 w-3.5" />
+                          Download
+                        </a>
+                      </>
+                    ) : (
+                      <a
+                        href={cert.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-opacity hover:opacity-80"
+                        style={{ backgroundColor: themeColors.interactive.primary, color: themeColors.text.accent }}
+                        aria-label={`View the LinkedIn post about ${cert.title} (opens in new tab)`}
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        View post on LinkedIn
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
