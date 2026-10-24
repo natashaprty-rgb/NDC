@@ -124,7 +124,6 @@ function createGarashoRegistrationForm() {
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
 
   Logger.log('Linkiga la wadaagayo (participants): ' + form.getPublishedUrl());
-  Logger.log('Linkiga gaaban:                     ' + form.shortenFormUrl(form.getPublishedUrl()));
   Logger.log('Wax ka beddelka foomka (edit):      ' + form.getEditUrl());
   Logger.log('Jawaabaha (Google Sheet):           ' + sheet.getUrl());
 }
