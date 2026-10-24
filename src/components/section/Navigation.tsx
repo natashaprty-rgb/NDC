@@ -115,7 +115,7 @@ const Navigation = () => {
             outline: 'none',
             WebkitTextFillColor: themeColors.colors.pink[500]
           }}
-          onClick={() => window.location.href = '/'}
+          onClick={() => window.location.href = import.meta.env.BASE_URL}
           aria-label="Nasteho Jelle - Go to homepage">
           Nasteho Jelle
         </button>

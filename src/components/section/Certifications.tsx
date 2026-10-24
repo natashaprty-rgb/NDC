@@ -3,6 +3,7 @@ import type { ComponentType, CSSProperties } from 'react';
 import { Award, BookOpen, Download, ExternalLink, GraduationCap } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors, withAlpha } from '../../hooks/useThemeColors';
+import { publicUrl } from '../../lib/publicUrl';
 
 type CertificateCategory = 'Academic' | 'Professional Training' | 'Online Courses';
 type CategoryFilter = 'All' | CertificateCategory;
@@ -30,7 +31,7 @@ const certificates: Certificate[] = [
     issuer: 'Benadir University',
     date: 'Oct 2025',
     category: 'Academic',
-    file: '/certificates/bachelor-degree-certificate.pdf',
+    file: publicUrl('/certificates/bachelor-degree-certificate.pdf'),
   },
   {
     id: 'secondary',
@@ -38,7 +39,7 @@ const certificates: Certificate[] = [
     issuer: 'Federal Republic of Somalia',
     date: '2021',
     category: 'Academic',
-    file: '/certificates/secondary-education-certificate.pdf',
+    file: publicUrl('/certificates/secondary-education-certificate.pdf'),
   },
   {
     id: 'moi',
@@ -46,7 +47,7 @@ const certificates: Certificate[] = [
     issuer: 'Benadir University',
     date: 'Nov 2025',
     category: 'Academic',
-    file: '/certificates/medium-of-instruction-certificate.pdf',
+    file: publicUrl('/certificates/medium-of-instruction-certificate.pdf'),
   },
   {
     id: 'internship',
@@ -54,7 +55,7 @@ const certificates: Certificate[] = [
     issuer: 'Benadir University',
     date: 'Dec 2025',
     category: 'Professional Training',
-    file: '/certificates/internship-completion-certificate.pdf',
+    file: publicUrl('/certificates/internship-completion-certificate.pdf'),
   },
   {
     id: 'mentorship',
@@ -62,7 +63,7 @@ const certificates: Certificate[] = [
     issuer: 'Global Mentorship Initiative',
     date: 'Jun 2025',
     category: 'Professional Training',
-    file: '/certificates/global-mentorship-initiative.pdf',
+    file: publicUrl('/certificates/global-mentorship-initiative.pdf'),
   },
   {
     id: 'somnog',
@@ -70,7 +71,7 @@ const certificates: Certificate[] = [
     issuer: 'Somali Network Operators Group',
     date: 'Dec 2025',
     category: 'Professional Training',
-    file: '/certificates/somali-network-operators-group.pdf',
+    file: publicUrl('/certificates/somali-network-operators-group.pdf'),
   },
   {
     id: 'tabaarak',
@@ -78,7 +79,7 @@ const certificates: Certificate[] = [
     issuer: 'Tabaarak ICT Solutions',
     date: 'Nov 2024',
     category: 'Professional Training',
-    file: '/certificates/tabaarak-ict-mern-stack.pdf',
+    file: publicUrl('/certificates/tabaarak-ict-mern-stack.pdf'),
   },
   {
     id: 'google-ai',
@@ -86,7 +87,7 @@ const certificates: Certificate[] = [
     issuer: 'Google · Coursera',
     date: 'Jun 2026',
     category: 'Online Courses',
-    file: '/certificates/google-ai-professional-certificate.pdf',
+    file: publicUrl('/certificates/google-ai-professional-certificate.pdf'),
     featured: '7 courses',
   },
   {
@@ -95,7 +96,7 @@ const certificates: Certificate[] = [
     issuer: 'Google · Coursera',
     date: 'May 2026',
     category: 'Online Courses',
-    file: '/certificates/ai-fundamentals.pdf',
+    file: publicUrl('/certificates/ai-fundamentals.pdf'),
   },
   {
     id: 'ai-brainstorm',
@@ -103,7 +104,7 @@ const certificates: Certificate[] = [
     issuer: 'Google · Coursera',
     date: 'May 2026',
     category: 'Online Courses',
-    file: '/certificates/ai-for-brainstorming-and-planning.pdf',
+    file: publicUrl('/certificates/ai-for-brainstorming-and-planning.pdf'),
   },
   {
     id: 'ai-content',
@@ -111,7 +112,7 @@ const certificates: Certificate[] = [
     issuer: 'Google · Coursera',
     date: 'May 2026',
     category: 'Online Courses',
-    file: '/certificates/ai-for-content-creation.pdf',
+    file: publicUrl('/certificates/ai-for-content-creation.pdf'),
   },
   {
     id: 'ai-writing',
@@ -119,7 +120,7 @@ const certificates: Certificate[] = [
     issuer: 'Google · Coursera',
     date: 'May 2026',
     category: 'Online Courses',
-    file: '/certificates/ai-for-writing-and-communicating.pdf',
+    file: publicUrl('/certificates/ai-for-writing-and-communicating.pdf'),
   },
   {
     id: 'data-analytics',
@@ -127,7 +128,7 @@ const certificates: Certificate[] = [
     issuer: 'IBM · Coursera',
     date: 'Apr 2026',
     category: 'Online Courses',
-    file: '/certificates/introduction-to-data-analytics.pdf',
+    file: publicUrl('/certificates/introduction-to-data-analytics.pdf'),
   },
   {
     id: 'ielts-spec',
@@ -135,7 +136,7 @@ const certificates: Certificate[] = [
     issuer: 'UC Irvine · Coursera',
     date: 'Aug 2026',
     category: 'Online Courses',
-    file: '/certificates/ielts-preparation-specialization.pdf',
+    file: publicUrl('/certificates/ielts-preparation-specialization.pdf'),
     featured: '3 courses',
   },
   {
@@ -144,7 +145,7 @@ const certificates: Certificate[] = [
     issuer: 'UC Irvine · Coursera',
     date: 'Jul 2026',
     category: 'Online Courses',
-    file: '/certificates/ielts-listening-speaking.pdf',
+    file: publicUrl('/certificates/ielts-listening-speaking.pdf'),
   },
   {
     id: 'ielts-write',
@@ -152,7 +153,7 @@ const certificates: Certificate[] = [
     issuer: 'UC Irvine · Coursera',
     date: 'Jul 2026',
     category: 'Online Courses',
-    file: '/certificates/ielts-writing.pdf',
+    file: publicUrl('/certificates/ielts-writing.pdf'),
   },
   {
     id: 'ielts-read',
@@ -160,7 +161,7 @@ const certificates: Certificate[] = [
     issuer: 'UC Irvine · Coursera',
     date: 'Aug 2026',
     category: 'Online Courses',
-    file: '/certificates/ielts-reading.pdf',
+    file: publicUrl('/certificates/ielts-reading.pdf'),
   },
 ];
 

@@ -3,6 +3,7 @@ import { useThemeColors } from '../hooks/useThemeColors';
 import { FileText, ArrowUp } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { socialLinks } from '../config/socialLinks';
+import { publicUrl } from '../lib/publicUrl';
 
 const quickLinks = [
   { id: 'about', label: 'About' },
@@ -136,7 +137,7 @@ const Footer = () => {
               </svg>
             </a>
             <a
-              href="/resume.pdf"
+              href={publicUrl('/resume.pdf')}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full transition-all duration-300 hover:scale-110"

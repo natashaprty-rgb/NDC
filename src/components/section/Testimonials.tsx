@@ -1,6 +1,7 @@
 import { Quote, FileText } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
+import { publicUrl } from '../../lib/publicUrl';
 
 const Testimonials = () => {
   const { isDarkMode } = useDarkMode();
@@ -42,7 +43,7 @@ const Testimonials = () => {
             </span>
           </div>
           <a
-            href="/documents/letter-of-recommendation.pdf"
+            href={publicUrl('/documents/letter-of-recommendation.pdf')}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-medium mt-5 hover:opacity-75 transition-opacity"

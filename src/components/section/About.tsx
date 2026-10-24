@@ -6,6 +6,7 @@ import TypewriterCarousel from '../TypewriterCarousel';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors, withAlpha } from '../../hooks/useThemeColors';
 import { profileHero, profileHeroWebp, stickers as stickerImages } from '../../assets';
+import { publicUrl } from '../../lib/publicUrl';
 
 
 const About = () => {
@@ -223,7 +224,7 @@ const About = () => {
                 <button
                   className="hero-action-btn text-sm md:text-base px-4 py-2 md:px-5 md:py-2.5"
                   onClick={() => {
-                    window.open('/resume.pdf', '_blank');
+                    window.open(publicUrl('/resume.pdf'), '_blank');
                   }}
                 >
                   Resume →

@@ -1,6 +1,7 @@
 import { GraduationCap, Briefcase, CodeXml, Award, Download, Eye } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
+import { publicUrl } from '../../lib/publicUrl';
 
 const highlights = [
   { icon: GraduationCap, label: "B.Sc. Computer Science & IT", sub: "CGPA 4.5 (A) — Benadir University" },
@@ -66,7 +67,7 @@ const Resume = () => {
           </div>
           <div className="flex flex-wrap justify-center gap-3 pt-6 border-t" style={{ borderColor: themeColors.card.border }}>
             <a
-              href="/resume.pdf"
+              href={publicUrl('/resume.pdf')}
               download
               className={buttonClass}
               style={{ backgroundColor: themeColors.colors.pink[500], color: themeColors.colors.white }}
@@ -75,7 +76,7 @@ const Resume = () => {
               Download CV
             </a>
             <a
-              href="/resume.pdf"
+              href={publicUrl('/resume.pdf')}
               target="_blank"
               rel="noopener noreferrer"
               className={buttonClass}

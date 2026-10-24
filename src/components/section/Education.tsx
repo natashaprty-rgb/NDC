@@ -2,6 +2,7 @@ import { GraduationCap, Calendar, MapPin, Award, FileText } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { publicUrl } from '../../lib/publicUrl';
 
 interface EducationEntry {
   degree: string;
@@ -30,8 +31,8 @@ const Education = () => {
       ],
       highlight: "CGPA 4.5 (A)",
       documents: [
-        { label: "Degree Certificate", href: "/certificates/bachelor-degree-certificate.pdf" },
-        { label: "Official Transcript", href: "/documents/official-transcript.pdf" }
+        { label: "Degree Certificate", href: publicUrl('/certificates/bachelor-degree-certificate.pdf') },
+        { label: "Official Transcript", href: publicUrl('/documents/official-transcript.pdf') }
       ]
     },
     {
@@ -44,7 +45,7 @@ const Education = () => {
         "Core subjects included Biology, Chemistry, Mathematics, Physics, and English"
       ],
       documents: [
-        { label: "School Certificate", href: "/certificates/secondary-education-certificate.pdf" }
+        { label: "School Certificate", href: publicUrl('/certificates/secondary-education-certificate.pdf') }
       ]
     }
   ];

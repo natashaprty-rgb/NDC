@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Trophy, Award, Star, Sparkles, Rocket, FileCheck } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors } from '../../hooks/useThemeColors';
+import { publicUrl } from '../../lib/publicUrl';
 
 interface Achievement {
   icon: LucideIcon;
@@ -20,19 +21,19 @@ const achievements: Achievement[] = [
     icon: Award,
     title: "Convocation Recognition",
     description: "Awarded a Certificate of Appreciation for organizing Benadir University’s 19th Convocation Ceremony.",
-    file: "/documents/certificate-of-appreciation-convocation.pdf"
+    file: publicUrl('/documents/certificate-of-appreciation-convocation.pdf')
   },
   {
     icon: Star,
     title: "ICT & Media Contribution",
     description: "Recognized for valuable contributions to the ICT Office and the 18th Graduation Book design.",
-    file: "/documents/certificate-of-appreciation-ict-office.pdf"
+    file: publicUrl('/documents/certificate-of-appreciation-ict-office.pdf')
   },
   {
     icon: Sparkles,
     title: "Google AI Professional Certificate",
     description: "Completed 7 Google AI courses and built a portfolio of 20+ AI-powered artifacts.",
-    file: "/certificates/google-ai-professional-certificate.pdf"
+    file: publicUrl('/certificates/google-ai-professional-certificate.pdf')
   },
   {
     icon: Rocket,
@@ -43,7 +44,7 @@ const achievements: Achievement[] = [
     icon: FileCheck,
     title: "Faculty Recommendation",
     description: "Highly recommended by Benadir University’s Chief Registrar for academic excellence and integrity.",
-    file: "/documents/letter-of-recommendation.pdf"
+    file: publicUrl('/documents/letter-of-recommendation.pdf')
   }
 ];
 

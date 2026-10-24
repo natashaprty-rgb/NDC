@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FileText } from 'lucide-react';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import { useThemeColors, withAlpha } from '../../hooks/useThemeColors';
+import { publicUrl } from '../../lib/publicUrl';
 
 // CEFR level → bar width
 const levelPercent: Record<string, number> = {
@@ -116,7 +117,7 @@ const Languages = () => {
         </div>
         <div className="flex flex-wrap justify-center gap-4 mt-8">
           <a
-            href="/certificates/ielts-preparation-specialization.pdf"
+            href={publicUrl('/certificates/ielts-preparation-specialization.pdf')}
             target="_blank"
             rel="noopener noreferrer"
             className={linkClass}
@@ -126,7 +127,7 @@ const Languages = () => {
             IELTS Preparation Certificate
           </a>
           <a
-            href="/certificates/medium-of-instruction-certificate.pdf"
+            href={publicUrl('/certificates/medium-of-instruction-certificate.pdf')}
             target="_blank"
             rel="noopener noreferrer"
             className={linkClass}
